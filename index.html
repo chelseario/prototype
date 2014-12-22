@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Drag and Drop Mockup</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+      html {
+        font-size: 88%;
+      }
+
+      body {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 1em;
+        line-height: 1.5em;
+        margin: 0;
+        min-width: 100%;
+        padding: 0;
+        text-align: left;
+      }
+      
+      header {
+        background: #262626;
+        box-sizing: border-box;
+        color: #878b8f;
+        display: block;
+        font-size: .9em;
+        height: 50px;
+        left: 0;
+        padding: 0 25px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+      }
+
+      header a {
+        color: #878b8f;
+        text-decoration: none;
+      }
+
+      .header-left a {
+        position: absolute;
+        top: 16px;
+      }
+
+      .header-center span {
+        position: absolute;
+        right: 50%;
+        top: 16px; 
+      }
+
+      .header-right a {
+        background-color: #2f6bcb;
+        border-radius: 4px;
+        color: #ffffff;
+        display: block;
+        height: 2.3;
+        line-height: 2.3;
+        padding: 0 30px;
+        position: absolute;
+        right: 15px;
+        top: 10px;
+      }
+      
+      div#editor-wrapper {
+        left: 0;
+        position: fixed;
+        top: 50px;
+        width: 100%;
+      }
+
+      aside {
+        background: #eeeff0;
+        color: #6b7a8a;
+        display: block;
+        height: 100%;
+        left: 0;
+        overflow: visible;
+        position: fixed;
+        top: 50px;
+        width: 428px;
+        z-index: 10;
+      }
+      
+      nav {
+        padding: 25px;
+        border-bottom: 1px solid #d1d2d3;
+      }
+
+      nav ul {
+        display: table;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+
+      nav ul li {
+        border: 2px solid #d1d2d3;
+        border-left-width: 0;
+        display: table-cell;
+        font-size: .9em;
+        font-weight: bold;
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+        width: 50%;
+      }
+
+      nav ul li.active {
+        background: #dddfe0;
+      }
+
+      nav ul li:first-child {
+        border-radius: 4px 0 0 4px;
+        border-left-width: 2px;
+      }
+
+      nav ul li:last-child {
+        border-radius: 0 4px 4px 0;
+      }
+
+      ul.content-tiles {
+        margin: 0;
+        padding: 25px;
+      }
+
+      ul.content-tiles li {
+        display: inline-block;
+        font-size: .9em;
+        height: 85px;
+        margin: 0 6px 15px 0;
+        position: relative;
+        width: 85px;
+      }
+
+      ul.content-tiles li div {
+        background: linear-gradient(#fff 1px, #fcfbfa 1px, #e8ebed);
+        border: solid 1px #bac3ca;
+        border-bottom-color: #929ba2;
+        border-top-color: #c5ced5;
+        border-radius: 4px;
+        box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+        color: #6b7a8a;
+        cursor: move;
+        height: 85px;
+        position: absolute;
+        text-align: center;
+        width: 85px;
+      }
+
+      ul.content-tiles li div:after {
+        background: no-repeat url(https://cbass.createsend.com/img/gend/emailbuilder/sprites/content-icons-s9d9f84a405.png);
+        content: "";
+        display: block;
+        height: 85px;
+        left: 0;
+        position: absolute;
+        width: 85px;
+        top: 0;  
+      }
+
+      ul.content-tiles li.text-icon div:after {
+        background-position: 0 -1623px;
+      }
+
+      ul.content-tiles li.divider-icon div:after {
+        background-position: 0 -529px;
+      }
+
+      ul.content-tiles li.image-icon div:after {
+        background-position: 0 -863px;
+      }
+
+      ul.content-tiles li.button-icon div:after {
+        background-position: 0 -229px;
+      }
+
+      ul.content-tiles li div span {
+        display: block;
+        padding: 60px 0 0 0;
+      }
+    
+      div#template-container {
+        display: block;
+        height: 100%;
+        overflow: visible;
+        padding: 0 0 0 428px;
+        position: relative;
+        z-index: 4;
+      }
+
+      div#iframe-container {
+        height: 100%;        
+        width: auto;
+      }
+
+      div#template-container iframe#template {
+        border: 0;
+      }
+    </style>
+  </head>	
+  <body>
+    <header>
+      <div class="header-left">
+        <a href="#">&larr; Choose template</a>
+      </div>
+      <div class="header-center">
+        <span>Saved</span>
+      </div>
+      <div class="header-right">
+        <a href="#">Next</a>
+      </div>  
+    </header>
+    <div id="editor-wrapper">
+      <aside>
+        <nav>
+          <ul>
+            <li class="active">Add Content</li>
+            <li>Customize Styles</li>
+          </ul>  
+        </nav>
+        <ul class="content-tiles">
+          <li class="text-icon">
+            <div>
+              <span>
+                Text
+              </span>
+            </div>
+          </li>
+          <li class="divider-icon">
+            <div>
+              <span>
+                Divider
+              </span>
+            </div>
+          </li>
+          <li class="image-icon">
+            <div>
+              <span>
+                Image
+              </span>
+            </div>
+          </li>
+          <li class="button-icon">
+            <div>
+              <span>
+                Button
+              </span>
+            </div>
+          </li>
+        </ul>  
+      </aside>
+      <div id="template-container">
+        <div id="iframe-container">
+          <iframe id="template" src="./template.html"></iframe>
+        </div>  
+      </div>  
+    </div>
+  </body>
+</html>
