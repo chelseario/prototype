@@ -12,7 +12,7 @@
         $("#template").load(function () {
           $('#droppable', frames['template'].document).droppable({
             drop: function( event, ui ) {
-              $(this).append("<div>" + $(this).attr('id') + "</div>");
+              $(this).append("<div>" +  $(ui.draggable).attr('id') + "</div>");
             }
           });
         });
