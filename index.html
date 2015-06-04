@@ -8,20 +8,20 @@
     <script src="//www.mailermailer.com/js/jquery/jquery.iframe.js"></script>
     <script src="https://gist.githubusercontent.com/Craga89/8219459/raw/3dca4c50b47c30e80f91e9ddef342e62638486db/jquery-ui-droppable-iframe-fix.js"></script>
     <script>
-      $(function() {
-      $( "ul.content-tiles li" ).draggable({ revert: true, helper: "clone" });
-      $('#droppable', frames['template'].document).droppable({
-        drop: function( event, ui ) {
+      $(document).ready(function() { // wait for page to load
+        $( "ul.content-tiles li" ).draggable({ revert: true, helper: "clone" });
+        $('#droppable', frames['template'].document).droppable({
+          drop: function( event, ui ) {
+            alert('event happened');
+          }
+        });
+        $('#droppable', frames['template'].document).on( "click", function() {
           alert('event happened');
-        }
-      });
-      $('#droppable', frames['template'].document).on( "click", function() {
-        alert('event happened');
-      });
-      $('.header-center').on( "click", function() {
-        alert('event happened');
-      });
-  });
+        });
+        $('.header-center').on( "click", function() {
+          alert('event happened');
+        });
+    });
   </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
