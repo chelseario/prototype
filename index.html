@@ -13,9 +13,6 @@
           $('#droppable', frames['template'].document).droppable({
             drop: function( event, ui ) {
               $(this).append('<div class="cke_editable cke_editable_inline cke_contents_ltr" contenteditable="true">New stuff</div>');
-      </div>
-              
-              <div>" +  $(ui.draggable).attr('id') + "</div>");
             }
           });
         });
