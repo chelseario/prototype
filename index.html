@@ -12,7 +12,7 @@
       $( "ul.content-tiles li" ).draggable({ revert: true, helper: "clone" });
       $('#droppable', frames['template'].document).droppable({
         drop: function( event, ui ) {
-          $( this ).html('dropped!');
+          alert('event happened');
         }
       });
   });
