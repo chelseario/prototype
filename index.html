@@ -7,6 +7,17 @@
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <script src="//www.mailermailer.com/js/jquery/jquery.iframe.js"></script>
     <script src="https://gist.githubusercontent.com/Craga89/8219459/raw/3dca4c50b47c30e80f91e9ddef342e62638486db/jquery-ui-droppable-iframe-fix.js"></script>
+    <script>
+      $(function() {
+      $( ".content-tiles" ).draggable();
+      $( "#template" ).droppable({
+        drop: function( event, ui ) {
+          $( this ).html('dropped!');
+        }
+      });
+  });
+  </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
       html {
