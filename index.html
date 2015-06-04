@@ -15,11 +15,13 @@
               alert('event happened');
             }
           });
-          $('#droppable', frames['template'].document).on( "click", function() {
-            alert('event happened');
-          });
         });
-        $( "ul.content-tiles li" ).draggable({ revert: true, helper: "clone" });
+        $( "ul.content-tiles li" ).draggable({ 
+          revert: true, 
+          helper: "clone",
+          iframeFix: true,
+          drag: function( event, ui ) {}
+        });
 
         $('.header-center').on( "click", function() {
           alert('event happened');
