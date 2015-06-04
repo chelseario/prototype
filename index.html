@@ -15,6 +15,9 @@
           alert('event happened');
         }
       });
+      $('#droppable', frames['template'].document).on( "click", function() {
+        console.log( $( this ).text() );
+      });
   });
   </script>
 
