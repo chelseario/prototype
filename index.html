@@ -12,8 +12,15 @@
         $("#template").load(function () {
           $('#droppable', frames['template'].document).droppable({
             drop: function( event, ui ) {
-              $(this).parent().append('<div class="cke_editable cke_editable_inline cke_contents_ltr" contenteditable="true">New stuff</div>');
-            }
+              alert($(ui.draggable).attr('id'));
+              switch ($(ui.draggable).attr('id')) {
+                case 'text':
+                  $(this).parent().append('<div class="cke_editable cke_editable_inline cke_contents_ltr" contenteditable="true">New stuff</div>');
+                  break;
+                case 'divider':
+                  $(this).parent().append('<hr />');
+                  break;
+              }
           });
         });
         $( "ul.content-tiles li" ).draggable({ 
@@ -185,19 +192,19 @@
         top: 0;  
       }
 
-      ul.content-tiles li.text-icon div:after {
+      ul.content-tiles li#text div:after {
         background-position: 0 -1623px;
       }
 
-      ul.content-tiles li.divider-icon div:after {
+      ul.content-tiles li#divider div:after {
         background-position: 0 -529px;
       }
 
-      ul.content-tiles li.image-icon div:after {
+      ul.content-tiles li#image div:after {
         background-position: 0 -863px;
       }
 
-      ul.content-tiles li.button-icon div:after {
+      ul.content-tiles li#button div:after {
         background-position: 0 -229px;
       }
 
@@ -251,28 +258,28 @@
           </ul>  
         </nav>
         <ul class="content-tiles">
-          <li class="text-icon">
+          <li id="text">
             <div>
               <span>
                 Text
               </span>
             </div>
           </li>
-          <li class="divider-icon">
+          <li id="divider">
             <div>
               <span>
                 Divider
               </span>
             </div>
           </li>
-          <li class="image-icon">
+          <li id="image">
             <div>
               <span>
                 Image
               </span>
             </div>
           </li>
-          <li class="button-icon">
+          <li id="button">
             <div>
               <span>
                 Button
