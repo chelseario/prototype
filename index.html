@@ -17,7 +17,8 @@
           });
           $('#droppable', frames['template'].document).on( "click", function() {
             alert('event happened');
-          });          
+          });
+          alert($('#droppable', frames['template'].document).html());
         });
         $( "ul.content-tiles li" ).draggable({ revert: true, helper: "clone" });
 
