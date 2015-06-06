@@ -13,6 +13,9 @@
     <script>
       $(document).ready(function() { // wait for page to load
         $("#template").load(function () {
+          CKEDITOR.disableAutoInline = true;
+          $('#droppable', frames['template'].document).ckeditor();
+
           $('#droppable', frames['template'].document).droppable({
             activeClass: "ui-state-hover",
             hoverClass: "ui-state-active",
