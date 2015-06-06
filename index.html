@@ -22,7 +22,9 @@
             drop: function( event, ui ) {
               switch ($(ui.draggable).attr('id')) {
                 case 'text':
-                  $('<div contenteditable="true">New stuff</div>').insertBefore( this );
+                  var $div = $('<div contenteditable="true">New stuff</div>');
+                  $div.insertBefore( this );
+                  $div.ckeditor();
                   break;
                 case 'divider':
                   $('<hr />').insertBefore( this );
