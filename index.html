@@ -13,7 +13,7 @@
     <script src="https://rawgit.com/davidjbradshaw/iframe-resizer/master/js/iframeResizer.min.js"></script>
     <script>
       $(document).ready(function() { // wait for page to load
-        $("#template").iFrameResize({log:true})
+        
         $("#template").load(function () {
           CKEDITOR.disableAutoInline = true;
 
@@ -38,6 +38,7 @@
               }
             }
           });
+          $("#template").iFrameResize({log:true});
         });
         $( "ul.content-tiles li" ).draggable({ 
           helper: "clone",
