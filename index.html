@@ -28,7 +28,7 @@
                   $div.insertBefore( this );
                   $div.ckeditor();
                   $div.ckeditor().editor.on('change', function() {
-                    alert('changed');
+                    $('#template').iframeAutoHeight({ heightOffset: 35 });
                   });
                   break;
                 case 'divider':
