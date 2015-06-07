@@ -27,7 +27,7 @@
                   var $div = $('<div contenteditable="true">New stuff</div>');
                   $div.insertBefore( this );
                   $div.ckeditor();
-                  $div.ckeditor().editor.on('change', function() {
+                  $div.ckeditor().editor.on('change2', function() {
                     $('#template').iframeAutoHeight({ heightOffset: 35 });
                   });
                   break;
