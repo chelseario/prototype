@@ -1,69 +1,70 @@
-// Create new object to cache iframe offsets
-$.ui.ddmanager.frameOffsets = {};
- 
-// Override the native `prepareOffsets` method. This is almost
-// identical to the un-edited method, except for the last part!
-$.ui.ddmanager.prepareOffsets = function (t, event) {
-    var i, j,
-        m = $.ui.ddmanager.droppables[t.options.scope] || [],
-        type = event ? event.type : null, // workaround for #2317
-        list = (t.currentItem || t.element).find(":data(ui-droppable)").addBack(),
-        doc, frameOffset;
- 
-    droppablesLoop: for (i = 0; i < m.length; i++) {
- 
-        //No disabled and non-accepted
-        if (m[i].options.disabled || (t && !m[i].accept.call(m[i].element[0], (t.currentItem || t.element)))) {
-            continue;
-        }
- 
-        // Filter out elements in the current dragoged item
-        for (j = 0; j < list.length; j++) {
-            if (list[j] === m[i].element[0]) {
-                m[i].proportions().height = 0;
-                continue droppablesLoop;
-            }
-        }
- 
-        m[i].visible = m[i].element.css("display") !== "none";
-        if (!m[i].visible) {
-            continue;
-        }
- 
-        //Activate the droppable if used directly from draggables
-        if (type === "mousedown") {
-            m[i]._activate.call(m[i], event);
-        }
-        
-        // Re-calculate offset
-        m[i].offset = m[i].element.offset();
+$.ui.intersect = (function() {
+	function isOverAxis( x, reference, size ) {
+		return ( x >= reference ) && ( x < ( reference + size ) );
+	}
 
-        // Re-calculate proportions (jQuery UI ~1.10 introduced a `proportions` cache method, so support both here!)
-        proportions = { width: m[i].element[0].offsetWidth, height: m[i].element[0].offsetHeight - m[i].element[0].ownerDocument.children[0].scrollTop };
-        console.log("offsetWidth: " + m[i].element[0].offsetWidth);
-        console.log("scrollHeight: " + m[i].element[0].scrollHeight);
-        console.log("offsetHeight: " + m[i].element[0].offsetHeight);
-        console.log("scrollTop: " + m[i].element[0].ownerDocument.children[0].scrollTop);
-        console.log("calculatedheight: " + (m[i].element[0].offsetHeight - m[i].element[0].ownerDocument.children[0].scrollTop).toString());
-        typeof m[i].proportions === 'function' ? m[i].proportions(proportions) : (m[i].proportions = proportions);
+	return function( draggable, droppable, toleranceMode ) {
+
+		if ( !droppable.offset ) {
+			return false;
+		}
+
+		var draggableLeft, draggableTop,
+			x1 = ( draggable.positionAbs || draggable.position.absolute ).left,
+			y1 = ( draggable.positionAbs || draggable.position.absolute ).top,
+			x2 = x1 + draggable.helperProportions.width,
+			y2 = y1 + draggable.helperProportions.height,
+			l = droppable.offset.left,
+			t = droppable.offset.top,
+			r = l + droppable.proportions().width,
+			b = t + droppable.proportions().height;
+   
+        alert('over here');
+    	if (1)
+    	{
+            
+        var iframeOffset = $(droppable.iframe).offset(),
+      		iframeWidth = $(droppable.iframe).width(),
+      		iframeHeight = $(droppable.iframe).height(),
+      		iframeScrollTop = $(droppable.iframe).contents().scrollTop(),
+      		iframeScrollLeft = $(droppable.iframe).contents().scrollLeft();
+            alert(iframeOffset);
         
-        /* ============ Here comes the fun bit! =============== */
- 
-        // If the element is within an another document...
-        if ((doc = m[i].document[0]) !== document) {
-            // Determine in the frame offset using cached offset (if already calculated)
-            frameOffset = $.ui.ddmanager.frameOffsets[doc];
-            if (!frameOffset) {
-                // Calculate and cache the offset in our new `$.ui.ddmanager.frameOffsets` object
-                frameOffset = $.ui.ddmanager.frameOffsets[doc] = $(
-                    // Different browsers store it on different properties (IE...)
-                    (doc.defaultView || doc.parentWindow).frameElement
-                ).offset();
-            }
- 
-            // Add the frame offset to the calculated offset
-            m[i].offset.left += frameOffset.left;
-            m[i].offset.top += frameOffset.top;
-        }
-    }
-};
+		    if (y1 < iframeOffset.top || x1 < iframeOffset.left || x1 + draggable.helperProportions.width > iframeOffset.left + iframeWidth || y1 + draggable.helperProportions.height > iframeOffset.top + iframeHeight) // outside iframe;
+      	{
+        	return false;
+      	}
+      	l = (iframeOffset.left + droppable.offset.left) - iframeScrollLeft;
+      	r = l + droppable.proportions().width;
+      	t = (iframeOffset.top + droppable.offset.top) - iframeScrollTop;
+      	b = t + droppable.proportions().height;
+    	}
+
+
+		switch ( toleranceMode ) {
+		case "fit":
+			return ( l <= x1 && x2 <= r && t <= y1 && y2 <= b );
+		case "intersect":
+			return ( l < x1 + ( draggable.helperProportions.width / 2 ) && // Right Half
+				x2 - ( draggable.helperProportions.width / 2 ) < r && // Left Half
+				t < y1 + ( draggable.helperProportions.height / 2 ) && // Bottom Half
+				y2 - ( draggable.helperProportions.height / 2 ) < b ); // Top Half
+		case "pointer":
+			draggableLeft = ( ( draggable.positionAbs || draggable.position.absolute ).left + ( draggable.clickOffset || draggable.offset.click ).left );
+			draggableTop = ( ( draggable.positionAbs || draggable.position.absolute ).top + ( draggable.clickOffset || draggable.offset.click ).top );
+			return isOverAxis( draggableTop, t, droppable.proportions().height ) && isOverAxis( draggableLeft, l, droppable.proportions().width );
+		case "touch":
+			return (
+				( y1 >= t && y1 <= b ) || // Top edge touching
+				( y2 >= t && y2 <= b ) || // Bottom edge touching
+				( y1 < t && y2 > b ) // Surrounded vertically
+			) && (
+				( x1 >= l && x1 <= r ) || // Left edge touching
+				( x2 >= l && x2 <= r ) || // Right edge touching
+				( x1 < l && x2 > r ) // Surrounded horizontally
+			);
+		default:
+			return false;
+		}
+	};
+})();
