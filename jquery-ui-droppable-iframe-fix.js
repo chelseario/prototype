@@ -19,10 +19,8 @@ $.ui.intersect = (function() {
 			r = l + droppable.proportions().width,
 			b = t + droppable.proportions().height;
    
-  
     	if (1)
     	{
-            
         var iframeOffset = $(droppable.iframe).offset(),
       		iframeWidth = $(droppable.iframe).width(),
       		iframeHeight = $(droppable.iframe).height(),
