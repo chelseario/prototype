@@ -59,7 +59,7 @@ $.ui.ddmanager.prepareOffsets = function (t, event) {
           
                          
             console.log( m[i].element[0].ownerDocument.children[0].scrollTop);
-            console.log( m[i].element.ownerDocument.scrollTop);
+            console.log( m[i].element[0].ownerDocument.scrollTop);
             console.log(m[i].element[0].scrollHeight);
             
             // Re-calculate proportions, total viewable size after scrolling
