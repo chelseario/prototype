@@ -69,6 +69,7 @@
         min-width: 100%;
         padding: 0;
         text-align: left;
+        overflow: hidden;
       }
       
       header {
@@ -83,6 +84,7 @@
         position: fixed;
         top: 0;
         width: 100%;
+        z-index: 4;
       }
 
       header a {
@@ -113,12 +115,21 @@
         right: 15px;
         top: 10px;
       }
-      
+
       div#editor-wrapper {
+        bottom: 0;
         left: 0;
         position: fixed;
+        right: 0;
         top: 50px;
-        width: 100%;
+        z-index: 3;
+      }
+      
+      div#editor {
+        position: relative;
+        padding: 0 0 0 428px;
+        height: 100%;
+        overflow-y: scroll;
       }
 
       aside {
@@ -129,7 +140,6 @@
         left: 0;
         overflow: visible;
         position: fixed;
-        top: 50px;
         width: 428px;
         z-index: 10;
       }
@@ -231,28 +241,10 @@
         display: block;
         padding: 60px 0 0 0;
       }
-    
-      div#template-container {
-        display: block;
-        height: 100%;
-        overflow: visible;
-        z-index: 4;
-        padding: 0 0 0 428px;
-        position: relative;
-      }
-
-      div#iframe-container {
-        height: 100%;   
-        text-align: center;
-      }
 
       div#template-container iframe#template {
-        border: 0;
-        width: 70%;
-        height: 600px;
-        margin-top:30px;
-        margin-left:auto;
-        margin-right:auto;
+        border: 0 none;
+        width: 100%;
       }
     </style>
   </head>	
@@ -269,47 +261,49 @@
       </div>  
     </header>
     <div id="editor-wrapper">
-      <aside>
-        <nav>
-          <ul>
-            <li class="active">Add Content</li>
-            <li>Customize Styles</li>
-          </ul>  
-        </nav>
-        <ul class="content-tiles">
-          <li id="text">
-            <div>
-              <span>
-                Text
-              </span>
-            </div>
-          </li>
-          <li id="divider">
-            <div>
-              <span>
-                Divider
-              </span>
-            </div>
-          </li>
-          <li id="image">
-            <div>
-              <span>
-                Image
-              </span>
-            </div>
-          </li>
-          <li id="button">
-            <div>
-              <span>button</span>
-            </div>
-          </li>
-        </ul>
-      </aside>
-      <div id="template-container">
-        <div id="iframe-container">
-          <iframe id="template" name="template" src="./template.html" scrolling="yes" width="300" height="150"></iframe>
+      <div id="editor">
+        <aside>
+          <nav>
+            <ul>
+              <li class="active">Add Content</li>
+              <li>Customize Styles</li>
+            </ul>  
+          </nav>
+          <ul class="content-tiles">
+            <li id="text">
+              <div>
+                <span>
+                  Text
+                </span>
+              </div>
+            </li>
+            <li id="divider">
+              <div>
+                <span>
+                  Divider
+                </span>
+              </div>
+            </li>
+            <li id="image">
+              <div>
+                <span>
+                  Image
+                </span>
+              </div>
+            </li>
+            <li id="button">
+              <div>
+                <span>button</span>
+              </div>
+            </li>
+          </ul>
+        </aside>
+        <div id="template-container">
+          <div id="iframe-container">
+            <iframe id="template" name="template" src="./template.html" scrolling="yes" height="600"></iframe>
+          </div>  
         </div>  
-      </div>  
+      </div>
     </div>
   </body>
 </html>
